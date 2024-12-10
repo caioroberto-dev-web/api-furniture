@@ -45,8 +45,9 @@ const Movel = db.define(
       allowNull: false,
     },
     image: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: [],
     },
     nomeVendedor: {
       type: DataTypes.STRING,

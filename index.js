@@ -27,10 +27,11 @@ const routesMovel = require("./routes/routesMovel");
 const app = express();
 
 //SOLUCIONA PROBLEMA DE CORS
+console.log("origin_ip",origin_ip)
 app.use(cors({ credentials: true, origin: origin_ip }));
 
 //RECEBANDO DADOS VIA JSON
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 //ARQUIVOS ESTÁTICOS DO SERVIDOR

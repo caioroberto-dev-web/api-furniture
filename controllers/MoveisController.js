@@ -13,6 +13,8 @@ const servidor_ip = process.env.SERVIDOR_IP;
 module.exports = class MoveisController {
   //CADASTRO
   static async cadastro(req, res) {
+    let images = [];
+
     let {
       nomeProduto,
       condicao,
@@ -55,12 +57,21 @@ module.exports = class MoveisController {
       return;
     }
 
-    if (!req.file) {
+    if (!req.files) {
       res.status(422).json({ message: "Insira uma foto do produto!" });
       return;
     }
 
-    image = `${servidor_ip}/image/moveis/${req.file.filename}`;
+    req.files.forEach((file) => {
+      const imageUrl = `${servidor_ip}/image/moveis/${file.filename}`;
+      // Adicione a imageUrl a um array de imagens
+      images.push({
+        filename: file.filename,
+        url: imageUrl,
+      });
+    });
+
+    image = `${servidor_ip}/image/moveis/${req.files.filename}`;
 
     // CRIA OBJETO MOVEL
     const movel = {
@@ -70,7 +81,7 @@ module.exports = class MoveisController {
       descricao,
       preco,
       situacao,
-      image,
+      image: images,
       nomeVendedor: usuario.nome,
       telefoneVendedor: usuario.telefone,
       idUsuario,
@@ -172,6 +183,8 @@ module.exports = class MoveisController {
 
   //================= ATUALIZA MOVEL ================= //
   static async atualizaMovel(req, res) {
+    let imagesAtt = [];
+
     const idMovel = req.params.id;
 
     let {
@@ -230,9 +243,20 @@ module.exports = class MoveisController {
       updatedData.preco = preco;
     }
 
-    if (req.file) {
-      image = `${servidor_ip}/image/moveis/${req.file.filename}`;
-      updatedData.image = image;
+    if (req.files.length > 0) {
+      if (req.files) {
+        image = `${servidor_ip}/image/moveis/${req.files.filename}`;
+        updatedData.image = imagesAtt;
+      }
+
+      req.files.forEach((file) => {
+        const imageUrl = `${servidor_ip}/image/moveis/${file.filename}`;
+        // Adicione a imageUrl a um array de imagens
+        imagesAtt.push({
+          filename: file.filename,
+          url: imageUrl,
+        });
+      });
     }
 
     if (nomeVendedor) {
