@@ -16,7 +16,7 @@ const router = express.Router();
 //ROTA DE CADASTRO DE MOVEIS
 router.post(
   "/cadastro",
-  uploadMovel.single("image"),
+  uploadMovel.array("image"),
   MoveisController.cadastro
 );
 
@@ -50,7 +50,7 @@ router.delete(
 //ROTA ATUALIZAÇÃO DE DADOS DO MOVEL
 router.patch(
   "/atualizamovel/:id",
-  uploadMovel.single("image"),
+  uploadMovel.array("image"),
   checaUsuarioToken,
   MoveisController.atualizaMovel
 );
