@@ -124,10 +124,11 @@ module.exports = class UsuarioController {
     const comparaSenha = bcrypt.compareSync(senha, compararEmailUsuario.senha);
 
     if (!comparaSenha) {
-      return res.status(422).json({ message: "Senha Inválida!" });
+      res.status(422).json({ message: "Senha Inválida!" });
+      return;
     }
 
-    console.log(criaUsuarioToken(compararEmailUsuario, req, res));
+    await criaUsuarioToken(compararEmailUsuario, req, res);
   }
 
   static async checaUsuario(req, res) {

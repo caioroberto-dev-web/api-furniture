@@ -14,7 +14,11 @@ const uploadMovel = require("../helpers/upload-moveis");
 const router = express.Router();
 
 //ROTA DE CADASTRO DE MOVEIS
-router.post("/cadastro", uploadMovel.array("image"), MoveisController.cadastro);
+router.post(
+  "/cadastro",
+  uploadMovel.array("image"),
+  MoveisController.cadastro
+);
 
 //ROTA PUBLICA QUE MOSTRA TODOS OS MOVEIS DISPONÍVEIS A VENDA
 router.get("/pegatodosmoveis", MoveisController.pegaTodosMoveis);

@@ -128,7 +128,6 @@ module.exports = class MoveisController {
 
     const movel = await Movel.findAll({
       where: { idComprador: idUsuario },
-      raw: true,
     });
 
     res.json({ movel });
@@ -154,7 +153,9 @@ module.exports = class MoveisController {
     const idMovel = req.params.id;
 
     //CHECA SE O MOVEL EXISTE
-    const movel = await Movel.findOne({ where: { idMovel: idMovel } });
+    const movel = await Movel.findOne({
+      where: { idMovel: idMovel },
+    });
 
     if (!movel) {
       res.status(404).json({ message: "Movel não encontrado!" });
